@@ -5,70 +5,59 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 
 // variable to link ReadMe format file
-const readmeFormat = require("./utils/generateMarkdown")
-
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for information about my application repository
-// THEN a quality, professional README.md is generated with the title of your project and sections entitled Description, Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions
-// WHEN I enter my project title
-// THEN this is displayed as the title of the README
-// WHEN I enter a description, installation instructions, usage information, contribution guidelines, and test instructions
-// THEN this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and Tests
-// WHEN I choose a license for my application from a list of options
-// THEN a badge for that license is added hear the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under
-// WHEN I enter my GitHub username
-// THEN this is added to the section of the README entitled Questions, with a link to my GitHub profile
-// WHEN I enter my email address
-// THEN this is added to the section of the README entitled Questions, with instructions on how to reach me with additional questions
-// WHEN I click on the links in the Table of Contents
-// THEN I am taken to the corresponding section of the README
-
+const readmeFormat = require("./utils/generateMarkdown");
 
 // array of questions for user
 const questions = [{
         type: "input",
-        message: "What is your project title?",
-        name: "title"
+        message: "What is your app title?",
+        name: "title",
+        default: "My App"
     },
     {
         type: "input",
-        message: "Please give a short description of your project",
-        name: "description"
+        message: "Please give a short description of your app.",
+        name: "description",
+        default: "Application"
     },
     {
         type: "input",
-        message: "What's the installation procedure for your project?",
-        name: "installation"
+        message: "What's the installation procedure for your app? *Add a `</br>` tag after each step.",
+        name: "installation",
+        default: "Email author: ${data.email}"
     },
     {
         type: "input",
-        message: "How will the project be used?",
+        message: "How will the app be used?",
         name: "usage"
     },
     {
-        type: "input",
-        message: "Choose an aopen source license: ISC, MIT, GNU GPL v3 or Unlicense?",
+        type: "list",
+        message: "Choose an open source license:",
+        choices: ["ISC", "MIT", "GNU GPL v3", "Unlicense"],
+        default: "Unlicence",
         name: "license"
     },
     {
         type: "input",
-        message: "How will the project be used?",
-        name: "usage"
+        message: "What message would you like to say to your app's would be contributors?",
+        name: "contributing",
+        default: "none"
     },
     {
         type: "input",
-        message: "Are there any contributors for your project?",
-        name: "contributors"
+        message: "Provide a URL/s for a demo/snapshots of your app.",
+        name: "test"
     },
     {
         type: "input",
-        message: "Provide a URL/s for a demo/snapshots of your project.",
-        name: "tests"
+        message: "What is your full name?",
+        name: "fullname"
     },
     {
         type: "input",
         message: "What is your GitHub profile name?",
-        name: "username"
+        name: "githubName"
     },
     {
         type: "input",
@@ -77,8 +66,8 @@ const questions = [{
     },
     {
         type: "input",
-        message: "What is the deployed URL of your project?",
-        name: "url"
+        message: "What is the deployed URL of your app?",
+        name: "deployedURL"
     },
 
 ];
@@ -94,8 +83,8 @@ function writeToFile(fileName, data) {
 // function to initialize program
 function init() {
     // function to resolve promise after user answered all the inquirer prompts
-    inquirer.prompt(questions).then(input => {
-        writeToFile("ReadMe.md", readmeFormat(input));
+    inquirer.prompt(questions).then((input, list) => {
+        writeToFile("ReadMe.md", readmeFormat(input, list));
     });
 };
 
