@@ -18,7 +18,7 @@ const questions = [{
         type: "input",
         message: "Please give a short description of your app.",
         name: "description",
-        default: "Application"
+        default: "CLI Application"
     },
     {
         type: "input",
@@ -30,6 +30,11 @@ const questions = [{
         type: "input",
         message: "How will the app be used?",
         name: "usage"
+    },
+    {
+        type: "input",
+        message: "Provide a URL/s for a demo/snapshots of your app.",
+        name: "demo"
     },
     {
         type: "list",
@@ -46,8 +51,9 @@ const questions = [{
     },
     {
         type: "input",
-        message: "Provide a URL/s for a demo/snapshots of your app.",
-        name: "test"
+        message: "How do you run a test for your app.",
+        name: "test",
+        default: "none"
     },
     {
         type: "input",
